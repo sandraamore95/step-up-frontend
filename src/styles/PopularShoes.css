@@ -1,0 +1,70 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+}
+
+.popular-shoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.shoe-card {
+    width: calc(25% - 20px);
+    margin-bottom: 20px;
+ 
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s; /* Agrega una transición suave al efecto de zoom */
+}
+
+.shoe-card:hover {
+    transform: scale(1.01); /* Aplica un aumento de escala cuando se pasa el mouse */
+}
+
+.shoe-card img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s; /* Agrega la misma transición para suavizar el efecto en la imagen */
+}
+
+.shoe-card:hover img {
+    transform: scale(1.1); /* Aplica un aumento de escala adicional a la imagen cuando se pasa el mouse */
+}
+
+.shoe-card img {
+    width: 100%;
+    height: auto;
+}
+
+.shoe-details {
+    padding: 10px;
+}
+
+.shoe-name {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.shoe-popularity,
+.shoe-price {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+@media screen and (max-width: 1200px) {
+    .shoe-card {
+        width: calc(33.33% - 20px); /* Calcula el ancho de cada tarjeta para que haya espacio para 3 columnas con un margen de 20px entre ellas */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .shoe-card {
+        width: 90%; /* Cambia a una sola columna en dispositivos móviles */
+    }
+}

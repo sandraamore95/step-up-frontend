@@ -1,0 +1,18 @@
+/* Assuming your CSS file is already linked in your project */
+.container {
+    margin-top: 20px; /* More space at the top */
+}
+
+.form-select {
+    margin-right: 15px; /* Adds space between the select boxes and button */
+}
+
+.btn-primary {
+    background-color: #0056b3; /* Darker blue for the button */
+    border-color: #004085; /* Darker border color */
+}
+
+.btn-primary:hover {
+    background-color: #004085; /* Even darker on hover */
+    border-color: #003567;
+}

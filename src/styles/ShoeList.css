@@ -1,0 +1,15 @@
+.favorite {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  
+    padding: 5px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.favorite .fas.fa-heart {
+    font-size: 30px;
+    color: #b40000; /* Color del ícono de estrella */
+}
