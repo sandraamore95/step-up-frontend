@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import ShoeGallery from '../components/DetailShoe/ShoeGallery';
 import ShoeData from '../components/DetailShoe/ShoeData';
+import ShoeSpecification from '../components/DetailShoe/ShoeSpecification';
 
 export default function DetailShoe() {
 
@@ -38,6 +39,10 @@ export default function DetailShoe() {
       <div className="col-md-6 mb-4">
         <ShoeData shoe={shoe} />
       </div>
+      
+      <div className="col-md-12">
+          <ShoeSpecification shoe={shoe}/>
+        </div>
     </div>
   </div>
   

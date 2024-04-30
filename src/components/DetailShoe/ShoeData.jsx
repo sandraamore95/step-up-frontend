@@ -15,7 +15,12 @@ export default function ShoeData({ shoe }) {
   const AddToCart = () => {
     // Lógica para añadir el producto al carrito
     console.log(`Añadir ${quantity} unidades de ${shoe.brand} ${shoe.model} al carrito`);
-    console.log(`Con la talla elegida :  ${shoe.size}`);
+    console.log(`Con la talla elegida :  ${size}`);
+
+  };
+  const AddToWish = () => {
+    // Lógica para añadir el producto al carrito
+    console.log("añadir a la lista deseos");
 
   };
 
@@ -35,7 +40,7 @@ export default function ShoeData({ shoe }) {
                 <button
                   key={size}
                   className={`size-button ${size === size ? 'selected' : ''}`}
-                  onClick={() => handleSizeSelection(size)}
+                  onClick={() => updateSize(size)}
                 >
                   {size}
                 </button>
@@ -53,7 +58,15 @@ export default function ShoeData({ shoe }) {
               onChange={updateQuantity}
             />
           </div>
-          <button className="btn btn-primary btn-block" onClick={AddToCart}>Añadir al carrito</button>
+          <div className="button-container">
+            <button className="btn btn-primary" onClick={AddToCart}>
+              Añadir al carrito
+            </button>
+            <button className="btn btn-outline-primary" onClick={AddToWish}>
+              <i className='fas fa-heart'></i>
+            </button>
+          </div>
+
 
         </div>
       </div>

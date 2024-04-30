@@ -3,16 +3,7 @@
     justify-content: space-between;
   }
   
-  .shoe-image {
-    flex: 1;
-    margin-right: 20px;
-  }
-  
-  .shoe-image img {
-    width: 100%;
-    height: auto;
-  }
-  
+ 
   .shoe-details {
     flex: 2;
   }
@@ -22,14 +13,7 @@
     margin-bottom: 10px;
   }
   
-  .specifications {
-    margin-bottom: 20px;
-  }
-  
-  .specifications h3 {
-    margin-bottom: 10px;
-  }
-  
+
   .quantity-selector {
     margin-bottom: 20px;
   }
@@ -50,4 +34,18 @@
   .btn-primary:hover {
     background-color: #0056b3;
   }
-  
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+.button-container .btn-primary {
+  margin-right: 10px; /* Ajusta el margen entre los botones según necesites */
+}
+
+.button-container .btn-outline-primary {
+  color: red; /* Cambia el color del icono del corazón a rojo */
+}
+i{
+    font-size: 25px;
+}

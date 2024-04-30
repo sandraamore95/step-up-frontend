@@ -15,7 +15,7 @@ export default function Home() {
    <div>
    <Banner />
    
-    <div className="container">
+    <div className="container text-center">
       
       <SpecialOffers />
       <PopularShoes />
