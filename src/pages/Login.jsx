@@ -7,7 +7,7 @@ import { useNavigate, useResolvedPath } from 'react-router-dom'
 import { UserContext } from "../context/userContext"
 
 export default function Login() {
-  const { setUser } = useContext(UserContext); // Obtén setUser del contexto del usuar
+  const { setUser } = useContext(UserContext); // necesitamos el serUser del contexto para poder modificarlo a data y pueda entrar en /profile
   const navigate = useNavigate();
 
   const [data, setData] = useState({

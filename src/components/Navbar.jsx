@@ -4,7 +4,10 @@ import SearchBar from './SearchBar';
 import { UserContext } from '../context/userContext';
 
 export default function Navbar() {
-  const { user, setUser  } = useContext(UserContext); // se le pasa del userContext , el user , la funcion setuser
+  const { user, setUser  } = useContext(UserContext); 
+
+//necesitamos el user -> para poder hacer las condiciones necesarias para mostrar los links 
+// necesmoa el setuser -> para poder modificar la funcion y establecerlo a null , para que no entre en el /profile.
 
   const logout = () => {
     // Realizar la lógica de logout, por ejemplo, limpiar el usuario del estado

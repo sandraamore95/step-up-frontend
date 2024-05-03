@@ -43,7 +43,9 @@ const ShoeSlider = ({ shoesData }) => {
     <Slider {...settings}>
       {shoesData.map((shoe, index) => (
         <div key={index} className="shoe-slide">
+          <div>
           <img src={shoe.images[0]} className="card-img-top" alt={`Imagen de ${shoe.brand}`} />
+          </div>
           <p>{shoe.offer}</p>
           <Link to={`/detailshoe/${shoe._id}`} className='btn btn-primary'>Ir a la Oferta</Link>
         </div>
