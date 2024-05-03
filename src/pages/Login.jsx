@@ -1,12 +1,13 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import '../styles/Login.css'
 //conectamos el frontend con el backend -> axios
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useResolvedPath } from 'react-router-dom'
+import { UserContext } from "../context/userContext"
 
 export default function Login() {
-
+  const { setUser } = useContext(UserContext); // Obtén setUser del contexto del usuar
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -17,24 +18,26 @@ export default function Login() {
 
 
   const loginUser = async (e) => {
-    e.preventDefault()
-    const { email, password } = data
+    e.preventDefault();
+    const { email, password } = data;
     try {
-      const { data } = await axios.post('/login', {
-        email, password
-      })   //le pasamos el user (email,password) al endpoint de login
-      if (data.error) {
-        toast.error(data.error)
+      const response = await axios.post('/login', { email, password });
+      const { data: userData } = response;
+
+      if (userData.error) {
+        toast.error(userData.error);
       } else {
-        setData({})
-        navigate('/dashboard')
+        // Actualizar el contexto del usuario con los datos del usuario autenticado
+        setUser(userData);
+        setData({}); // Limpiar los datos del formulario
+
+        // Navegar a la página de dashboard o a cualquier otra página
+        navigate('/dashboard');
       }
     } catch (error) {
-      console.log(error)
+      console.error(error);
     }
-
-  }
-
+  };
 
 
   return (

@@ -29,22 +29,27 @@ axios.defaults.withCredentials = true;
 
 function App() {
   return (
-    <UserContextProvider>
-        <ShoesProvider>
-      <Navbar />
-      <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/catalogo' element={<Catalog />} />
-        <Route path="/detailShoe/:id"  element={<DetailShoe />}/>
-        <Route path="/collection"  element={<Collection />}/>
-      </Routes>
-      <Footer />
-      </ShoesProvider>
-    </UserContextProvider>
+<UserContextProvider>
+  <Navbar />
+  <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
+  <Routes>
+
+    <Route path='/register' element={<Register />} />
+    <Route path='/login' element={<Login />} />
+    <Route path='/dashboard' element={<Dashboard />} />
+    <Route path='/wishList' element={<Dashboard />} />
+   
+    <Route path='/' element={<ShoesProvider><Home /></ShoesProvider>} />
+    <Route path='/catalogo' element={<ShoesProvider><Catalog /></ShoesProvider>} />
+   
+    <Route path="/detailShoe/:id" element={<DetailShoe />} />
+    <Route path="/collection" element={<Collection />} />
+    
+  </Routes>
+  <Footer />
+</UserContextProvider>
+
+
   )
 }
 

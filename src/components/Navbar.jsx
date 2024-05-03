@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
+import { UserContext } from '../context/userContext';
 
 export default function Navbar() {
+  const { user, setUser  } = useContext(UserContext); // se le pasa del userContext , el user , la funcion setuser
+
+  const logout = () => {
+    // Realizar la lógica de logout, por ejemplo, limpiar el usuario del estado
+    setUser(null);
+  };
+
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
@@ -29,16 +38,32 @@ export default function Navbar() {
           <ul className="navbar-nav ms-auto">
             <SearchBar />
             
+            {user ? (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/wishList">Lista de Deseos</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/dashboard">Perfil</Link>
+                </li>
+                <li className="nav-item">
+                  <button className="nav-link" onClick={logout}>Cerrar Sesión</button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">Login</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register">Register</Link>
+                </li>
+              </>
+            )}
             <li className="nav-item">
               <Link className="nav-link" to="/cart">
                 <i className="fas fa-shopping-cart"></i>
               </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Login</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/register">Register</Link>
             </li>
           </ul>
         </div>
