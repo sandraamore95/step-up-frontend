@@ -28,6 +28,7 @@ export default function Login() {
         toast.error(userData.error);
       } else {
         // Actualizar el contexto del usuario con los datos del usuario autenticado
+        console.log(userData);
         setUser(userData);
         setData({}); // Limpiar los datos del formulario
 

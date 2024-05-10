@@ -4,10 +4,10 @@ import SearchBar from './SearchBar';
 import { UserContext } from '../context/userContext';
 
 export default function Navbar() {
-  const { user, setUser  } = useContext(UserContext); 
+  const { user, setUser } = useContext(UserContext);
 
-//necesitamos el user -> para poder hacer las condiciones necesarias para mostrar los links 
-// necesmoa el setuser -> para poder modificar la funcion y establecerlo a null , para que no entre en el /profile.
+  //necesitamos el user -> para poder hacer las condiciones necesarias para mostrar los links 
+  // necesmoa el setuser -> para poder modificar la funcion y establecerlo a null , para que no entre en el /profile.
 
   const logout = () => {
     // Realizar la lógica de logout, por ejemplo, limpiar el usuario del estado
@@ -40,12 +40,21 @@ export default function Navbar() {
           </ul>
           <ul className="navbar-nav ms-auto">
             <SearchBar />
-            
+
             {user ? (
               <>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/wishList">Lista de Deseos</Link>
-                </li>
+
+                {user.role === 'admin' && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/operations">Operaciones</Link>
+                  </li>
+                )}
+                {user.role === 'user' && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/wishList">Lista de Deseos</Link>
+                  </li>
+                )}
+
                 <li className="nav-item">
                   <Link className="nav-link" to="/dashboard">Perfil</Link>
                 </li>
@@ -53,21 +62,30 @@ export default function Navbar() {
                   <button className="nav-link" onClick={logout}>Cerrar Sesión</button>
                 </li>
               </>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login">Login</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/register">Register</Link>
-                </li>
-              </>
-            )}
-            <li className="nav-item">
-              <Link className="nav-link" to="/cart">
-                <i className="fas fa-shopping-cart"></i>
-              </Link>
-            </li>
+
+            ) :
+
+              //si no hay user autenticado se muestran estos links
+
+              (
+
+                <>
+                
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/login">Login</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/register">Register</Link>
+                  </li>
+                </>
+              )}
+
+<li className="nav-item">
+                    <Link className="nav-link" to="/cart">
+                      <i className="fas fa-shopping-cart"></i>
+                    </Link>
+                  </li>
+
           </ul>
         </div>
       </div>
