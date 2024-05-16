@@ -6,9 +6,23 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { Routes, Route } from 'react-router-dom'
 import axios from 'axios'
 import { UserContextProvider } from './context/userContext'
+import { ShoesProvider } from './context/shoesContext';
 import Navbar from '../src/components/Navbar'
 import Footer from './components/Footer'
-import {routes} from './routes'
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Home from './pages/Home';
+import Catalog from './pages/Catalog';
+import DetailShoe from './pages/DetailShoe';
+import Collection from './pages/Collection';
+import Dashboard from './pages/Dashboard'
+import PrivateRoute from './privateRoute';
+import WishList from './pages/WishList';
+
+
+
+
+
 axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.withCredentials = true;
 //utilizamos la ruta principal para nuestros endpoints
@@ -19,14 +33,21 @@ axios.defaults.withCredentials = true;
 function App() {
   return (
     <UserContextProvider>
-    <Navbar />
-    <Routes>
-      {routes.map((route, index) => (
-        <Route key={index} {...route} />
-      ))}
-    </Routes>
-    <Footer />
-  </UserContextProvider>
+
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<ShoesProvider><Home /></ShoesProvider>} />
+        <Route path="/catalogo" element={<ShoesProvider><Catalog /></ShoesProvider>} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/detailShoe/:id" element={<DetailShoe />} />
+        <Route path="/collection" element={<Collection />} />
+        <Route path="/dashboard" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
+        <Route path="/wishList" element={<PrivateRoute> <WishList /> </PrivateRoute>} />
+      </Routes>
+      <Footer />
+
+    </UserContextProvider>
 
 
   )

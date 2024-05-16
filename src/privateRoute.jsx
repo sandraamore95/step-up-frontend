@@ -1,18 +1,18 @@
-
-import React, { useContext } from 'react';
-import { Route, Navigate } from 'react-router-dom';
+// Importa Navigate y Route de react-router-dom en tu archivo PrivateRoute.js
+import {Navigate } from 'react-router-dom';
+import { useContext } from 'react';
 import { UserContext } from './context/userContext';
 
 
-const PrivateRoute = ({ element, ...rest }) => {
-    const context = useContext( UserContext);
-    const user = context.user; // recogemos el objeto user que generamos en el backend del controlador -> profile
+const PrivateRoute = ({ children }) => {
+    const context = useContext(UserContext);
+    const user = context.user;
 
-  return user ? (
-    <Route {...rest} element={element} />
-  ) : (
-    <Navigate to="/login" replace />
-  );
-};
+    if (user) {
+        return children
+    } else {
+        return <Navigate to='/login' />
+    }
+}
 
 export default PrivateRoute;
