@@ -6,6 +6,7 @@ import { ShoesProvider } from './context/shoesContext';
 import Catalog from './pages/Catalog';
 import DetailShoe from './pages/DetailShoe';
 import Collection from './pages/Collection';
+import WishList from './pages/WishList';
 
 
 
@@ -16,6 +17,8 @@ export const routes = [
 
   // Utiliza el componente PrivateRoute para proteger la ruta '/dashboard' y /wishList
   { path: '/dashboard', element: <Dashboard /> },
+  { path: '/wishList', element: < WishList/> },
+
 
 
   //---------SHOESPROVIDER-----------
