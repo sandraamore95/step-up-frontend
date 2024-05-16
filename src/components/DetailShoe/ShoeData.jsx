@@ -32,6 +32,9 @@ export default function ShoeData({ shoe }) {
 
   };
 
+
+
+//AÑADIR A LISTA DE DESEOS 
   const AddToWish = () => {
     // se añade a la lista de favoritos si existe un usuario , si no , se pide que se registre.
     if(user){
@@ -41,9 +44,6 @@ export default function ShoeData({ shoe }) {
       navigate('/login', { state: { from: location.pathname } });
 
     }
-   
-   
-
   };
 
   const addToWishlist = async () => {
