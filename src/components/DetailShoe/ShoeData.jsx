@@ -1,10 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import '../../styles/ShoeData.css'
+import { UserContext } from '../../context/userContext';
+import axios from 'axios'
+import { useNavigate,useLocation } from 'react-router-dom';
+
+
 
 export default function ShoeData({ shoe }) {
 
+  const navigate = useNavigate();
+  const location = useLocation();
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState('');
+  const context = useContext( UserContext);
+  const user = context.user; // recogemos el objeto user que generamos en el backend del controlador -> profile
+
+  const [message, setMessage] = useState(''); //mensajes de error y success
 
   const updateQuantity = (e) => {
     setQuantity(parseInt(e.target.value));
@@ -12,18 +23,40 @@ export default function ShoeData({ shoe }) {
   const updateSize = (selectedSize) => {
     setSize(selectedSize);
   };
+
   const AddToCart = () => {
     // Lógica para añadir el producto al carrito
+    console.log(user.name);
     console.log(`Añadir ${quantity} unidades de ${shoe.brand} ${shoe.model} al carrito`);
     console.log(`Con la talla elegida :  ${size}`);
 
   };
+
   const AddToWish = () => {
-    // Lógica para añadir el producto al carrito
-    console.log("añadir a la lista deseos");
+    // se añade a la lista de favoritos si existe un usuario , si no , se pide que se registre.
+    if(user){
+      addToWishlist();
+    }else{
+      // le redirigimos a login
+      navigate('/login', { state: { from: location.pathname } });
+
+    }
+   
+   
 
   };
 
+  const addToWishlist = async () => {
+    try {
+      // Realiza la solicitud POST al endpoint '/favorites/:shoeId'
+      const response = await axios.post(`/favorites/${shoe._id}`, null, { 
+        withCredentials: true, 
+      });
+      setMessage(response.data.message)
+    } catch (error) {
+      setMessage(error.response.data.message);
+    }
+  };
 
 
 
@@ -65,6 +98,7 @@ export default function ShoeData({ shoe }) {
             <button className="btn btn-outline-primary" onClick={AddToWish}>
               <i className='fas fa-heart'></i>
             </button>
+            {message && <p>{message}</p>}
           </div>
 
 

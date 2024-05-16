@@ -3,12 +3,13 @@ import '../styles/Login.css'
 //conectamos el frontend con el backend -> axios
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
-import { useNavigate, useResolvedPath } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { UserContext } from "../context/userContext"
 
 export default function Login() {
   const { setUser } = useContext(UserContext); // necesitamos el serUser del contexto para poder modificarlo a data y pueda entrar en /profile
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [data, setData] = useState({
     email: '',
@@ -33,7 +34,11 @@ export default function Login() {
         setData({}); // Limpiar los datos del formulario
 
         // Navegar a la página de dashboard o a cualquier otra página
-        navigate('/dashboard');
+        if (location.state && location.state.from) {
+          navigate(location.state.from); // Redirigir al usuario a la ubicación almacenada
+        } else {
+          navigate('/dashboard'); // Si no hay una ubicación almacenada, redirigir al usuario a la página de inicio
+        }
       }
     } catch (error) {
       console.error(error);
