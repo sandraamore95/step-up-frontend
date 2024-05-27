@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import '../../styles/ShoeData.css'
 import { UserContext } from '../../context/userContext';
 import axios from 'axios'
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
 
@@ -12,10 +12,34 @@ export default function ShoeData({ shoe }) {
   const location = useLocation();
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState('');
-  const context = useContext( UserContext);
-  const user = context.user; // recogemos el objeto user que generamos en el backend del controlador -> profile
-
+  const context = useContext(UserContext);
+  const user = context.user; // recogemos el objeto user del localStorage
+  const [existFavorite, setExistFavorite] = useState(false);
   const [message, setMessage] = useState(''); //mensajes de error y success
+
+
+  useEffect(() => {
+    const checkIfInWishlist = async () => {
+      try {
+        const response = await axios.get(`/existFavorites/${shoe._id}`, {
+          withCredentials: true,
+        });
+        console.log(response.data.exists);
+        setExistFavorite(response.data.exists);
+      } catch (error) {
+        console.error('Error al verificar la lista de deseos:', error);
+      }
+    };
+
+    if (user) {
+      checkIfInWishlist();
+    }
+  }, [shoe]);
+
+
+
+
+
 
   const updateQuantity = (e) => {
     setQuantity(parseInt(e.target.value));
@@ -34,12 +58,12 @@ export default function ShoeData({ shoe }) {
 
 
 
-//AÑADIR A LISTA DE DESEOS 
+  //AÑADIR A LISTA DE DESEOS 
   const AddToWish = () => {
     // se añade a la lista de favoritos si existe un usuario , si no , se pide que se registre.
-    if(user){
+    if (user) {
       addToWishlist();
-    }else{
+    } else {
       // le redirigimos a login
       navigate('/login', { state: { from: location.pathname } });
 
@@ -49,16 +73,19 @@ export default function ShoeData({ shoe }) {
   const addToWishlist = async () => {
     try {
       // Realiza la solicitud POST al endpoint '/favorites/:shoeId'
-      const response = await axios.post(`/favorites/${shoe._id}`, null, { 
-        withCredentials: true, 
+      const response = await axios.post(`/favorites/${shoe._id}`, null, {
+        withCredentials: true,
       });
+      setExistFavorite(true); // Actualiza el estado
       setMessage(response.data.message)
     } catch (error) {
       setMessage(error.response.data.message);
     }
   };
 
-
+const removeFromWishlist=async ()=>{
+console.log("eliminar zapatilla");
+}
 
   return (
     <div className="container">
@@ -95,10 +122,16 @@ export default function ShoeData({ shoe }) {
             <button className="btn btn-primary" onClick={AddToCart}>
               Añadir al carrito
             </button>
-            <button className="btn btn-outline-primary" onClick={AddToWish}>
-              <i className='fas fa-heart'></i>
-            </button>
-            {message && <p>{message}</p>}
+            {existFavorite ? (
+              <button className="btn btn-outline-danger" onClick={removeFromWishlist}>
+                <i className='fas fa-heart-broken'></i> Eliminar de Favoritos
+              </button>
+            ) : (
+              <button className="btn btn-outline-primary" onClick={addToWishlist}>
+                <i className='fas fa-heart'></i> Agregar a Favoritos
+              </button>
+            )}
+    
           </div>
 
 

@@ -10,7 +10,6 @@ export function UserContextProvider({ children }) {
   });
 
   useEffect(() => {
-    console.log(user);
     const fetchUserProfile = async () => {
       try {
         const response = await axios.get('/profile');

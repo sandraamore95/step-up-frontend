@@ -14,13 +14,6 @@ export default function Navbar() {
     logoutUser();
   };
 
-  useEffect(() => {
- console.log("STAMOS EN EL NAVBAR");
- console.log(user);
-  }, );
-
-
-
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
