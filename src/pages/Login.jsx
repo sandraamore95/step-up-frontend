@@ -7,30 +7,34 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { UserContext } from "../context/userContext"
 
 export default function Login() {
-  const { setUser } = useContext(UserContext); // necesitamos el serUser del contexto para poder modificarlo a data y pueda entrar en /profile
+ 
   const navigate = useNavigate();
   const location = useLocation();
+
 
   const [data, setData] = useState({
     email: '',
     password: ''
   })
 
+  const { loginUser } = useContext(UserContext);
 
 
-  const loginUser = async (e) => {
+  const login = async (e) => {
     e.preventDefault();
     const { email, password } = data;
     try {
       const response = await axios.post('/login', { email, password });
       const { data: userData } = response;
+     
 
       if (userData.error) {
         toast.error(userData.error);
       } else {
         // Actualizar el contexto del usuario con los datos del usuario autenticado
-        console.log(userData);
-        setUser(userData);
+        console.log(userData); //devuelve todo el objeto USER entero
+        loginUser(userData)
+        
         setData({}); // Limpiar los datos del formulario
 
         // Navegar a la página de dashboard o a cualquier otra página
@@ -56,7 +60,7 @@ export default function Login() {
         <div className="col-md-6 login-form-container">
           {/* Formulario de inicio de sesión */}
           <h2 className="text-center mb-4">LOGIN</h2>
-          <form onSubmit={loginUser}>
+          <form onSubmit={login}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
 

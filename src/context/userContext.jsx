@@ -4,25 +4,44 @@ import axios from 'axios';
 export const UserContext = createContext();
 
 export function UserContextProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
   useEffect(() => {
-    // Realizar la solicitud al endpoint /profile solo si hay un usuario autenticado
-    if (user) {
     console.log(user);
-      axios.get('/profile')
-        .then(response => {
-          const userData = response.data;
-          setUser(userData);
-        })
-        .catch(error => {
-          console.error('Error al obtener los datos del usuario:', error);
-        });
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axios.get('/profile');
+        const userData = response.data;
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+      } catch (error) {
+        console.error('Error al obtener los datos del usuario:', error);
+        setUser(null);
+        localStorage.removeItem('user');
+      }
+    };
+
+    if (user) {
+      fetchUserProfile();
     }
   }, []);
 
+  const loginUser = (userData) => {
+    console.log("estamos en usercontext - login");
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
+  const logoutUser = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, loginUser, logoutUser }}>
       {children}
     </UserContext.Provider>
   );

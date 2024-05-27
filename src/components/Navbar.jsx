@@ -1,18 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import { UserContext } from '../context/userContext';
 
 export default function Navbar() {
-  const { user, setUser } = useContext(UserContext);
+  const { user, logoutUser } = useContext(UserContext);
 
   //necesitamos el user -> para poder hacer las condiciones necesarias para mostrar los links 
-  // necesmoa el setuser -> para poder modificar la funcion y establecerlo a null , para que no entre en el /profile.
+  // necesmoa el logoutUser -> para poder cerrar la sesion de localStorage
 
   const logout = () => {
     // Realizar la lógica de logout, por ejemplo, limpiar el usuario del estado
-    setUser(null);
+    logoutUser();
   };
+
+  useEffect(() => {
+ console.log("STAMOS EN EL NAVBAR");
+ console.log(user);
+  }, );
+
 
 
   return (
@@ -70,7 +76,7 @@ export default function Navbar() {
               (
 
                 <>
-                
+
                   <li className="nav-item">
                     <Link className="nav-link" to="/login">Login</Link>
                   </li>
@@ -80,11 +86,11 @@ export default function Navbar() {
                 </>
               )}
 
-<li className="nav-item">
-                    <Link className="nav-link" to="/cart">
-                      <i className="fas fa-shopping-cart"></i>
-                    </Link>
-                  </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/cart">
+                <i className="fas fa-shopping-cart"></i>
+              </Link>
+            </li>
 
           </ul>
         </div>
