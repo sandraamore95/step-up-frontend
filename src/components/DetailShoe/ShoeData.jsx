@@ -34,7 +34,7 @@ export default function ShoeData({ shoe }) {
     if (user) {
       checkIfInWishlist();
     }
-  }, [shoe]);
+  }, [existFavorite]);
 
 
 
@@ -83,9 +83,18 @@ export default function ShoeData({ shoe }) {
     }
   };
 
-const removeFromWishlist=async ()=>{
-console.log("eliminar zapatilla");
-}
+  const removeFromWishlist = async () => {
+    try {
+      console.log(shoe._id);
+      const response = await axios.delete(`/delete/${shoe._id}`, { 
+        withCredentials: true, 
+      });
+      setMessage(response.data.message);
+      setExistFavorite(false); // Actualiza el estado
+    } catch (error) {
+     // setMessage(error.response.data.message);
+    }
+  };
 
   return (
     <div className="container">
