@@ -48,11 +48,6 @@ export default function Navbar() {
                     <Link className="nav-link" to="/operations">Operaciones</Link>
                   </li>
                 )}
-                {user.role === 'user' && (
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/wishList">Lista de Deseos</Link>
-                  </li>
-                )}
 
                 <li className="nav-item">
                   <Link className="nav-link" to="/dashboard">Perfil</Link>
