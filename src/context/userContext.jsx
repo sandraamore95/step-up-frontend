@@ -12,7 +12,7 @@ export function UserContextProvider({ children }) {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get('/profile');
+        const response = await axios.get('/auth/profile');
         const userData = response.data;
         setUser(userData);
         localStorage.setItem('user', JSON.stringify(userData));

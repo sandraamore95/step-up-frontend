@@ -18,7 +18,7 @@ export default function Register() {
     e.preventDefault()
     const { name, email, password } = data
     try {
-      const { data } = await axios.post('/register', {
+      const { data } = await axios.post('/auth/register', {
         name, email, password
       })   //le pasamos el user (name,email,password) al endpoint de register 
 

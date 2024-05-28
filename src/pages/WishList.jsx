@@ -8,7 +8,7 @@ export default function WishList() {
   useEffect(() => {
     const fetchFavoriteShoes = async () => {
       try {
-        const response = await axios.get(`/favoriteShoes`);
+        const response = await axios.get(`/favorites`);
         setFavoriteShoes(response.data.favoriteShoes.shoes); 
       } catch (error) {
         console.error('Error al obtener las zapatillas favoritas del usuario:', error);
