@@ -1,0 +1,23 @@
+/* Dashboard.css */
+.menu-container {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+  .menu-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .menu-list li {
+    cursor: pointer;
+    padding: 10px 0;
+  }
+  
+  .menu-list li:hover,
+  .menu-list li.active {
+    background-color: #e9ecef;
+  }
+  
