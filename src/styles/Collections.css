@@ -1,0 +1,54 @@
+.card {
+    border: none;
+}
+
+.card img {
+    object-fit: cover;
+    height: 200px;
+}
+
+.card-body {
+    text-align: center;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.card-text {
+    color: #555;
+}
+/* Collection.css */
+.form-select-custom {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    color: #495057;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-select-custom:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-select-custom option {
+    background-color: #fff;
+    color: #495057;
+    padding: 0.375rem 0.75rem;
+}
+
+/* Additional styles to enhance the look */
+.form-label-custom {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
