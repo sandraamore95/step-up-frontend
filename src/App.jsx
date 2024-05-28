@@ -18,6 +18,7 @@ import Collection from './pages/Collection';
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './privateRoute';
 import WishList from './pages/WishList';
+import DataUser from './pages/DataUser';
 
 
 
@@ -44,6 +45,7 @@ function App() {
         <Route path="/collection" element={<Collection />} />
         <Route path="/dashboard" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
         <Route path="/wishList" element={<PrivateRoute> <WishList /> </PrivateRoute>} />
+        <Route path="/edit-profile" element={<PrivateRoute> <DataUser /> </PrivateRoute>} />
       </Routes>
       <Footer />
 
