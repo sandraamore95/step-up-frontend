@@ -21,7 +21,7 @@ export default function ShoeData({ shoe }) {
   useEffect(() => {
     const checkIfInWishlist = async () => {
       try {
-        const response = await axios.get(`/existFavorites/${shoe._id}`, {
+        const response = await axios.get(`/favorites/existFavorites/${shoe._id}`, {
           withCredentials: true,
         });
         console.log(response.data.exists);
@@ -73,7 +73,7 @@ export default function ShoeData({ shoe }) {
   const addToWishlist = async () => {
     try {
       // Realiza la solicitud POST al endpoint '/favorites/:shoeId'
-      const response = await axios.post(`/favorites/${shoe._id}`, null, {
+      const response = await axios.post(`/favorites/add/${shoe._id}`, null, {
         withCredentials: true,
       });
       setExistFavorite(true); // Actualiza el estado
@@ -86,7 +86,7 @@ export default function ShoeData({ shoe }) {
   const removeFromWishlist = async () => {
     try {
       console.log(shoe._id);
-      const response = await axios.delete(`/delete/${shoe._id}`, { 
+      const response = await axios.delete(`/favorites/delete/${shoe._id}`, { 
         withCredentials: true, 
       });
       setMessage(response.data.message);
