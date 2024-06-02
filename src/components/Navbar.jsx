@@ -75,7 +75,7 @@ export default function Navbar() {
               )}
 
             <li className="nav-item">
-              <Link className="nav-link" to="/cart">
+              <Link className="nav-link" to="/cart-user">
                 <i className="fas fa-shopping-cart"></i>
               </Link>
             </li>
