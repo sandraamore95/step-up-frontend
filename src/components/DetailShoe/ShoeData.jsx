@@ -136,7 +136,7 @@ export default function ShoeData({ shoe }) {
                 <i className='fas fa-heart-broken'></i> Eliminar de Favoritos
               </button>
             ) : (
-              <button className="btn btn-outline-primary" onClick={addToWishlist}>
+              <button className="btn btn-outline-primary" onClick={AddToWish}>
                 <i className='fas fa-heart'></i> Agregar a Favoritos
               </button>
             )}
