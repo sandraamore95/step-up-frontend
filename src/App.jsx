@@ -20,6 +20,7 @@ import PrivateRoute from './privateRoute';
 import WishList from './pages/WishList';
 import DataUser from './pages/DataUser';
 import CartUser from './pages/CartUser';
+import { CartProvider } from './context/cartContext';
 
 
 
@@ -35,22 +36,22 @@ axios.defaults.withCredentials = true;
 function App() {
   return (
     <UserContextProvider>
-
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<ShoesProvider><Home /></ShoesProvider>} />
-        <Route path="/catalogo" element={<ShoesProvider><Catalog /></ShoesProvider>} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/detailShoe/:id" element={<DetailShoe />} />
-        <Route path="/collection" element={<Collection />} />
-        <Route path="/cart-user" element={<CartUser />} />
-        <Route path="/dashboard" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
-        <Route path="/wishList" element={<PrivateRoute> <WishList /> </PrivateRoute>} />
-        <Route path="/edit-profile" element={<PrivateRoute> <DataUser /> </PrivateRoute>} />
-      </Routes>
-      <Footer />
-
+      <CartProvider>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<ShoesProvider><Home /></ShoesProvider>} />
+          <Route path="/catalogo" element={<ShoesProvider><Catalog /></ShoesProvider>} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/detailShoe/:id" element={<DetailShoe />} />
+          <Route path="/collection" element={<Collection />} />
+          <Route path="/cart-user" element={<CartUser />} />
+          <Route path="/dashboard" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
+          <Route path="/wishList" element={<PrivateRoute> <WishList /> </PrivateRoute>} />
+          <Route path="/edit-profile" element={<PrivateRoute> <DataUser /> </PrivateRoute>} />
+        </Routes>
+        <Footer />
+      </CartProvider>
     </UserContextProvider>
 
 
