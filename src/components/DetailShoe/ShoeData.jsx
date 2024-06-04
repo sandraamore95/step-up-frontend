@@ -3,7 +3,7 @@ import '../../styles/ShoeData.css'
 import { UserContext } from '../../context/userContext';
 import axios from 'axios'
 import { useNavigate, useLocation } from 'react-router-dom';
-import CartContext from '../../context/cartContext';
+import { CartContext } from '../../context/cartContext';
 
 
 
@@ -17,7 +17,7 @@ export default function ShoeData({ shoe }) {
   const user = context.user; // recogemos el objeto user del localStorage
   const [existFavorite, setExistFavorite] = useState(false);
   const [message, setMessage] = useState(''); //mensajes de error y success
-  const { cart, setCart, updateQuantity } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
 
 
   useEffect(() => {
@@ -38,41 +38,20 @@ export default function ShoeData({ shoe }) {
     }
   }, [existFavorite]);
 
-  const handleAddToCart = () => {
-    // Agregar el producto al carrito
-    if (!user) {
-      const new_cart = {
-        products: [
-          {
-            product: shoe,
-            quantity: quantity,
-          },
-        ],
-      };
-      console.log(new_cart);
-      // si el usuario es invitado
-      localStorage.setItem('cart-user', JSON.stringify(new_cart));
-    }
-    // recoger la cantidad actual del carrito 
-    updateQuantity(shoe._id, quantity);
-    //podria pasarle un nuevo zapato , con la cantidad y la talla 
-    //CREAR UN NUEVO OBJETO 
-    navigate('/cart-user', { state: { from: location.pathname } });
-  };
 
-
-  const updateQuantityCart = (e) => {
+ 
+  const updateQuantity = (e) => {
     setQuantity(parseInt(e.target.value));
   };
   const updateSize = (selectedSize) => {
     setSize(selectedSize);
   };
 
+
+  //le pasamos el producto y la cantidad, para que se modifique del carrito
   const AddToCart = () => {
-    // Lógica para añadir el producto al carrito
-    console.log(user.name);
-    console.log(`Añadir ${quantity} unidades de ${shoe.brand} ${shoe.model} al carrito`);
-    console.log(`Con la talla elegida :  ${size}`);
+    addToCart(shoe, quantity,size);
+   // navigate('/cart-user', { state: { from: location.pathname } });
 
   };
 
@@ -144,11 +123,11 @@ export default function ShoeData({ shoe }) {
               className="form-control"
               min="1"
               value={quantity}
-              onChange={updateQuantityCart}
+              onChange={updateQuantity}
             />
           </div>
           <div className="button-container">
-            <button className="btn btn-primary" onClick={handleAddToCart}>
+            <button className="btn btn-primary" onClick={AddToCart}>
               Añadir al carrito
             </button>
             {existFavorite ? (

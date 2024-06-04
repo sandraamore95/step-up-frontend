@@ -2,9 +2,13 @@ import React, { useContext,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import { UserContext } from '../context/userContext';
+import { CartContext } from '../context/cartContext';
 
 export default function Navbar() {
   const { user, logoutUser } = useContext(UserContext);
+  const { cartItems } = useContext(CartContext);
+
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   //necesitamos el user -> para poder hacer las condiciones necesarias para mostrar los links 
   // necesmoa el logoutUser -> para poder cerrar la sesion de localStorage
@@ -77,6 +81,7 @@ export default function Navbar() {
             <li className="nav-item">
               <Link className="nav-link" to="/cart-user">
                 <i className="fas fa-shopping-cart"></i>
+                <span>{totalItems}</span>
               </Link>
             </li>
 

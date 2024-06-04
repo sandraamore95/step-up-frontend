@@ -20,7 +20,8 @@ import PrivateRoute from './privateRoute';
 import WishList from './pages/WishList';
 import DataUser from './pages/DataUser';
 import CartUser from './pages/CartUser';
-import { CartProvider } from './context/cartContext';
+import CartProvider from './context/cartContext';
+
 
 
 
