@@ -34,9 +34,17 @@ export function UserContextProvider({ children }) {
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
-  const logoutUser = () => {
+  const logoutUser =async() => {
     setUser(null);
     localStorage.removeItem('user');
+    //llamar al endpoint del backend /logout para eliminar la cookie token
+    try {
+      const response = await  axios.post('/auth/logout');
+      console.log(response.data.message);
+    } catch (error) {
+      console.error('Error al eliminar las cookies :', error);
+   
+    }
   };
 
   return (
