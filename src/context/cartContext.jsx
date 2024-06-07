@@ -16,7 +16,9 @@ const CartProvider = ({ children }) => {
       const fetchCart = async () => {
         try {
           const response = await axios.get(`/cart/cart-user`);
-          setCartItems(response.data.cart);
+          console.log(response.data.cart.products);
+          setCartItems(response.data.cart.products);
+          console.log("el carrito esta asi ",cartItems);
         } catch (error) {
           console.error('Error fetching cart for authenticated user:', error);
         }
@@ -30,17 +32,28 @@ const CartProvider = ({ children }) => {
     if (!user) {
       console.log("estamos aqui porque somos usuario invitado");
       localStorage.setItem('cart-user', JSON.stringify(cartItems));
+      console.log("el carrito esta asi ",cartItems);
     } else {
-      // Optionally, save the cart to the backend for authenticated users
-      const saveCart = async () => {
+      
+
+  const saveCart = async () => {
         try {
-          await axios.post(`/cart/add`, { cart: cartItems });
+          console.log(cartItems);
+          if(cartItems.length!=0){
+            await axios.post(`/cart/add`, { cart: cartItems });
+          }
+         
         } catch (error) {
           console.error('Error saving cart for authenticated user:', error);
         }
       };
 
-      saveCart();
+saveCart();
+   
+      // Optionally, save the cart to the backend for authenticated users
+    
+
+      
     }
   }, [cartItems, user]);
 
