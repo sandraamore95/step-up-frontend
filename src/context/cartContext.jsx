@@ -66,6 +66,7 @@ const CartProvider = ({ children }) => {
   useEffect(() => {
       if (!user) {
         localStorage.removeItem('cart-user');
+        setCartItems([])
       }
   }, [user]);
 
