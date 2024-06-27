@@ -50,7 +50,13 @@ export default function ShoeData({ shoe }) {
 
   //le pasamos el producto y la cantidad, para que se modifique del carrito
   const AddToCart = () => {
-    addToCart(shoe, quantity,size);
+    const newItem = {
+      product: shoe._id, // o el campo que corresponda al ID del producto
+      quantity: quantity,
+      size: size.toString()
+    };
+  
+    addToCart(newItem);
    // navigate('/cart-user', { state: { from: location.pathname } });
 
   };

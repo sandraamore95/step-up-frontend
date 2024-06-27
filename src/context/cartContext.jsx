@@ -11,83 +11,110 @@ const CartProvider = ({ children }) => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  //USE EFFECT USUARIO AUTENTICADO -> BACKEND
   useEffect(() => {
     if (user) {
-      console.log("somos usuario autenticado");
+      console.log("USUARIO AUTENTICADO");
       const fetchCart = async () => {
         try {
           const response = await axios.get(`/cart/cart-user`);
-          console.log(response.data.cart.products);
           setCartItems(response.data.cart.products);
           console.log("el carrito esta asi ", cartItems);
         } catch (error) {
           console.error('Error fetching cart for authenticated user:', error);
         }
       };
-
       fetchCart();
     }
   }, [user]);
 
+  
+  // USE EFFECT USUARIO INVITADO -> LOCALSTORAGE
   useEffect(() => {
     if (!user) {
-      console.log("estamos aqui porque somos usuario invitado");
+      console.log("USUARIO INVITADO");
       localStorage.setItem('cart-user', JSON.stringify(cartItems));
       console.log("el carrito esta asi ", cartItems);
-    } else {
-      //cuando eres usuario invitado con localstorage items y vas a iniciar sesion 
- console.log("eres usuario autenticado con items en el localstorage + backend cartUser");
-
- const savedCart = JSON.parse(localStorage.getItem('cart-user')) || []; console.log(savedCart);
-      const saveCart = async () => {
-        try {
-          console.log(cartItems);
-          if (cartItems.length != 0) {
-          
-            await axios.post(`/cart/add`, { cart: savedCart });
-          }
-
-        } catch (error) {
-          console.error('Error saving cart for authenticated user:', error);
-        }
-      };
-
-      saveCart();
     }
-  }, [cartItems, user]); // cuando el usuario inicia sesion  || cuando el localStorage se añade al backend cambia el cartItems , asi que vuelve a empezar el useEffect()
+    }, [cartItems]);
 
 
-  const addToCart = (product, quantity, size) => {
-    // Buscar si el producto ya existe en el carrito con la misma talla
-    const existingItemIndex = cartItems.findIndex(
-      (item) => item.product._id === product._id && item.size === size
-    );
-  
-    // Si el producto ya existe en el carrito con la misma talla, se incrementa la cantidad
-    if (existingItemIndex !== -1) {
-      const updatedCartItems = [...cartItems];
-      updatedCartItems[existingItemIndex].quantity += quantity;
-      setCartItems(updatedCartItems);
-    } else {
-      // Si no existe, se añade un nuevo elemento al arreglo de productos
-      const updatedCartItems = [
-        ...cartItems,
-        {
-          product: {
-            _id: product._id,
-            // Agregar otras propiedades del producto si es necesario
-          },
-          quantity,
-          size,
-        },
-      ];
-  
-      setCartItems(updatedCartItems);
+    //USE EFFECT SINCRONIZACION CARRITO LOCALSTORAGE + BACKEND
+    useEffect(() => {
+      if (user) {
+        const syncCartLocalWithBackend = async () => {
+          try {
+            const savedCart = JSON.parse(localStorage.getItem('cart-user')) || [];
+            if (savedCart.length > 0) {
+              console.log("sincronizando carrito local con backend");
+              await axios.post(`/cart/add`, { cart: savedCart });
+              localStorage.removeItem('cart-user');
+            }
+            // Fetch the updated cart from backend to ensure cartItems is up-to-date
+            const response = await axios.get(`/cart/cart-user`);
+            setCartItems(response.data.cart.products);
+          } catch (error) {
+            console.error('Error syncing local cart with backend:', error);
+          }
+        };
+        syncCartLocalWithBackend();
+      }
+    }, [user]);
+
+
+  //USE EFFFECT CUANDO EL USUARIO CIERRA SESION - DELETE LOCALSTORAGE CARRITO
+  useEffect(() => {
+      if (!user) {
+        localStorage.removeItem('cart-user');
+      }
+  }, [user]);
+
+
+
+  const addToCart = async (newItem) => {
+    try {
+
+      if (user) {
+        // Enviar el nuevo producto al backend para usuarios autenticados
+        const response = await axios.post(`/cart/add`, { cart: [newItem] });
+        const updatedCart = response.data.cart.products;
+        setCartItems(updatedCart);
       
+      } else {
+        const productDetails = await axios.get(`/shoes/${newItem.product}`);
+        console.log(productDetails.data);
+        const fullNewItem = {
+          ...newItem,
+          product: productDetails.data
+        };
+  
+        // Añadir el producto a local storage para usuarios invitados
+        setCartItems(prevItems => {
+          const existingItemIndex = prevItems.findIndex(
+            item => item.product._id === fullNewItem.product._id && item.size === fullNewItem.size
+          );
+  
+          let updatedCart;
+          if (existingItemIndex >= 0) {
+            updatedCart = prevItems.map((item, index) =>
+              index === existingItemIndex
+                ? { ...item, quantity: item.quantity + fullNewItem.quantity }
+                : item
+            );
+          } else {
+            updatedCart = [...prevItems, fullNewItem];
+          }
+  
+          localStorage.setItem('cart-user', JSON.stringify(updatedCart));
+          return updatedCart;
+        });
+      }
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
     }
   };
   
-
+  
   const updateQuantity = (productId, size, quantity) => {
     setCartItems(
       cartItems.map((item) =>
