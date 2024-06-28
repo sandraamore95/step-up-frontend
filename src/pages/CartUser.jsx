@@ -51,7 +51,7 @@ import { CartContext } from '../context/cartContext';
                 </option>
               ))}
             </select>
-            <button onClick={() => removeFromCart(item.product._id, item.size)}>Remove</button>
+            <button onClick={() => removeFromCart(item,item.product._id, item.size)}>Remove</button>
           </li>
         ))}
       </ul>

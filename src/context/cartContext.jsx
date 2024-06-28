@@ -136,8 +136,25 @@ const CartProvider = ({ children }) => {
     );
   };
 
-  const removeFromCart = (productId, size) => {
-    setCartItems(cartItems.filter((item) => !(item.product._id === productId && item.size === size)));
+  
+
+  const removeFromCart = async (item) => {
+    const productId=item.product._id;
+    const size=item.size;
+    console.log(item);
+    try {
+      const response = await axios.put('/cart/delete', {
+        data: {
+          product:item
+        }
+      });
+      console.log(response.data.message);
+  
+      // Update the cart items in the frontend
+      setCartItems(cartItems.filter((item) => !(item.product._id === productId && item.size === size)));
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
   };
 
   return (
