@@ -10,6 +10,7 @@ export const CartContext = createContext();
 2) YA FUNCIONA LO DE ELIMINAR DE GOLPE REMOVE PARA LOCALSTORAGE INVITADOS - DONE
 3) DISMINUIR Y AUMENTAR LA CANTIDAD DE LA ZAPATILLA EN LOCALSTORAGE INVITADOS - DONE
 4) parte BACKEND - MIRAR ELIMINAR CANTIDAD , O REMOVE TOTAL , O SUMAR CANTIDAD TAMTBIEN  -XXXXXXX
+5) si le das al boton borrar , antes de que le llegue el item al backend , poner el quantity a 0 
 
 USUARIO INVITADO
 SUMAR , RESTAR, ELIMINAR ---FUNCIONA
@@ -173,7 +174,11 @@ const CartProvider = ({ children }) => {
       // Actualizar el estado del carrito en el frontend
       setCartItems(cart);
     } else {
-      try {
+      console.log("Vamos a borrar del carrito del usuario auntenticado");
+      item.quantity=0;
+      console.log(item);
+
+    try {
         const response = await axios.put('/cart/delete', {
           data: {
             product: item
@@ -186,6 +191,9 @@ const CartProvider = ({ children }) => {
       } catch (error) {
         console.error('Error removing item from cart:', error);
       }
+
+
+  
     }
 
 
