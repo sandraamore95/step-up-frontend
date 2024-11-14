@@ -54,7 +54,7 @@ export default function ShoeData({ shoe }) {
     const newItem = {
       product: shoe._id, // o el campo que corresponda al ID del producto
       quantity: quantity,
-      size: size.toString()
+      size: selectedSize.toString()
     };
   
     addToCart(newItem);
