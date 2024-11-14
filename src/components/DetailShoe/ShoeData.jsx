@@ -12,7 +12,7 @@ export default function ShoeData({ shoe }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [quantity, setQuantity] = useState(1);
-  const [size, setSize] = useState('');
+  const [selectedSize, setSelectedSize] = useState(null); // Estado para la talla seleccionada
   const context = useContext(UserContext);
   const user = context.user; // recogemos el objeto user del localStorage
   const [existFavorite, setExistFavorite] = useState(false);
@@ -44,7 +44,8 @@ export default function ShoeData({ shoe }) {
     setQuantity(parseInt(e.target.value));
   };
   const updateSize = (selectedSize) => {
-    setSize(selectedSize);
+    console.log(selectedSize);
+    setSelectedSize(selectedSize);
   };
 
 
@@ -111,13 +112,13 @@ export default function ShoeData({ shoe }) {
           <div className="form-group">
             <div className="sizes">
               {shoe.sizes.map((size) => (
-                <button
-                  key={size}
-                  className={`size-button ${size === size ? 'selected' : ''}`}
-                  onClick={() => updateSize(size)}
-                >
-                  {size}
-                </button>
+               <button
+               key={size}
+               className={`size-button ${selectedSize === size ? 'selected' : ''}`} // Cambia la clase si es la talla seleccionada
+               onClick={() => updateSize(size)} // Actualiza la talla seleccionada
+             >
+               {size}
+             </button>
               ))}
             </div>
           </div>

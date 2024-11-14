@@ -2,7 +2,11 @@
     display: flex;
     justify-content: space-between;
   }
-  
+  .size-button.selected {
+    background-color: #007bff; /* Color de fondo cuando se selecciona */
+    color: white; /* Color de texto cuando se selecciona */
+    border-color: #007bff; /* Bordes cuando se selecciona */
+  }
  
   .shoe-details {
     flex: 2;
