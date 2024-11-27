@@ -21,6 +21,7 @@ import WishList from './pages/WishList';
 import DataUser from './pages/DataUser';
 import CartUser from './pages/CartUser';
 import CartProvider from './context/cartContext';
+import OrderProvider from './context/orderContext';
 
 
 
@@ -38,6 +39,7 @@ function App() {
   return (
     <UserContextProvider>
       <CartProvider>
+      <OrderProvider>
         <Navbar />
         <Routes>
           <Route path="/" element={<ShoesProvider><Home /></ShoesProvider>} />
@@ -52,6 +54,7 @@ function App() {
           <Route path="/edit-profile" element={<PrivateRoute> <DataUser /> </PrivateRoute>} />
         </Routes>
         <Footer />
+        </OrderProvider>
       </CartProvider>
     </UserContextProvider>
 
